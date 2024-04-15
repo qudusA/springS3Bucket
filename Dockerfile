@@ -1,8 +1,8 @@
-FROM maven:3.9.2-eclipse-temurin:17-alpine as build
-COPY ./src src/
-COPY ./pom.xml pom.xml/
-
-RUN maven clean package -DskipTests
+#FROM maven:3.9.2-eclipse-temurin:17-alpine as build
+#COPY ./src src/
+#COPY ./pom.xml pom.xml/
+#
+#RUN maven clean package -DskipTests
 
 FROM  eclipse-temurin:17-jdk-alpine
 #VOLUME /tmp
