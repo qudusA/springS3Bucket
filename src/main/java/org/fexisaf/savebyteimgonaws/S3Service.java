@@ -34,7 +34,8 @@ public class S3Service {
         metadata.setContentType("image/jpeg");
         metadata.setContentLength(inputStream.available());
 
-        PutObjectRequest request = new PutObjectRequest(bucketName, fileName, inputStream, metadata);
+        PutObjectRequest request =
+                new PutObjectRequest(bucketName, fileName, inputStream, metadata);
        return s3.getClient().putObject(request);
 
     }

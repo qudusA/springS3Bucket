@@ -1,19 +1,24 @@
 package org.fexisaf.savebyteimgonaws;
 
 import com.amazonaws.HttpMethod;
+import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,8 +36,12 @@ public class S3Controller {
     @GetMapping("/img")
     public ResponseEntity<?> getImageFromS3(@RequestParam("image") String id) throws IOException {
         InputStream obj = service.getImage(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        Map<String, InputStream> file = new HashMap<>();
+        file.put("img", obj);
         return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
+                .headers(headers)
                 .body(new InputStreamResource(obj));
     }
 
